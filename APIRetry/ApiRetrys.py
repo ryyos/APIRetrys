@@ -376,3 +376,123 @@ class ApiRetry:
         raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
     
 
+    def options(
+            self, 
+            url: str, 
+            headers: dict, 
+            max_retries: int = 5, 
+            retry_interval: Union[int, float] = 0.2,
+            params  = None,
+            data    = None,
+            cookies = None,
+            files   = None,
+            auth    = None,
+            timeout = None,
+            proxies = None,
+            hooks   = None,
+            stream  = None,
+            verify  = None,
+            cert    = None,
+            json    = None,
+            ) -> Response:
+        
+        for retry in range(max_retries):
+            try:
+                response = requests.options(
+                        url     = url,
+                        params  = params,
+                        data    = data,
+                        headers = headers,
+                        cookies = cookies,
+                        files   = files,
+                        auth    = auth,
+                        timeout = timeout,
+                        proxies = proxies,
+                        hooks   = hooks,
+                        stream  = stream,
+                        verify  = verify,
+                        cert    = cert,
+                        json    = json,
+                )
+
+                if self.show_logs and response.status_code == 200:
+                    logger.info(f"method: OPTIONS")
+                    logger.info(f"status code: {response.status_code}")
+                    logger.info(f"retry to: {retry}")
+
+                elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"method: OPTIONS")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+
+                return response
+            except Exception as err:
+                logger.error(f'message: {err}')
+                logger.warning(f'try the request again')
+                
+            sleep(retry_interval)
+            retry_interval+= 0.2
+        
+        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
+    
+
+    def patch(
+            self, 
+            url: str, 
+            headers: dict, 
+            max_retries: int = 5, 
+            retry_interval: Union[int, float] = 0.2,
+            data    = None,
+            params  = None,
+            cookies = None,
+            files   = None,
+            auth    = None,
+            timeout = None,
+            proxies = None,
+            hooks   = None,
+            stream  = None,
+            verify  = None,
+            cert    = None,
+            json    = None,
+            ) -> Response:
+        
+        for retry in range(max_retries):
+            try:
+                response = requests.patch(
+                        url     = url,
+                        params  = params,
+                        data    = data,
+                        headers = headers,
+                        cookies = cookies,
+                        files   = files,
+                        auth    = auth,
+                        timeout = timeout,
+                        proxies = proxies,
+                        hooks   = hooks,
+                        stream  = stream,
+                        verify  = verify,
+                        cert    = cert,
+                        json    = json,
+                )
+
+                if self.show_logs and response.status_code == 200:
+                    logger.info(f"method: PATCH")
+                    logger.info(f"status code: {response.status_code}")
+                    logger.info(f"retry to: {retry}")
+
+                elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"method: PATCH")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+
+                return response
+            except Exception as err:
+                logger.error(f'message: {err}')
+                logger.warning(f'try the request again')
+                
+            sleep(retry_interval)
+            retry_interval+= 0.2
+        
+        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
