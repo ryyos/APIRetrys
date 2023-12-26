@@ -3,10 +3,12 @@ from requests import Response
 from typing import Union
 from time import sleep
 from icecream import ic
-
+from LogsOptions import LogsOptions
 
 class ApiRetry:
-    def __init__(self) -> None:
+    def __init__(self, options: LogsOptions = None) -> None:
+        options = options.path
+        print(options)
         pass
 
     def get(self, url: str, headers: dict, max_retries: int = 5, retry_interval: Union[int, float] = 0.2):
