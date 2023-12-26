@@ -2,7 +2,6 @@ import requests
 from requests import Response
 from typing import Union
 from time import sleep
-from icecream import ic
 from Exceptions.MaxRetryExceptions import MaxRetryExceptions
 from utils.Logs import logger
 
@@ -13,9 +12,9 @@ class ApiRetry:
     def get(
             self, 
             url: str, 
-            headers: dict, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            headers = None, 
             params  = None,
             data    = None,
             cookies = None,
@@ -74,9 +73,9 @@ class ApiRetry:
     def post(
             self, 
             url: str, 
-            headers: dict, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            headers = None, 
             data    = None,
             json    = None,
             params  = None,
@@ -134,9 +133,9 @@ class ApiRetry:
     def head(
             self, 
             url: str, 
-            headers: dict, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            headers = None, 
             params  = None,
             data    = None,
             cookies = None,
@@ -194,9 +193,9 @@ class ApiRetry:
     def put(
             self, 
             url: str, 
-            headers: dict, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            headers = None, 
             data    = None,
             params  = None,
             cookies = None,
@@ -255,9 +254,9 @@ class ApiRetry:
     def delete(
             self, 
             url: str, 
-            headers: dict, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            headers = None, 
             params  = None,
             data    = None,
             cookies = None,
@@ -317,9 +316,9 @@ class ApiRetry:
             self, 
             url: str, 
             method: str,
-            headers: dict, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            headers = None, 
             params  = None,
             data    = None,
             cookies = None,
@@ -379,9 +378,9 @@ class ApiRetry:
     def options(
             self, 
             url: str, 
-            headers: dict, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            headers = None, 
             params  = None,
             data    = None,
             cookies = None,
@@ -440,9 +439,9 @@ class ApiRetry:
     def patch(
             self, 
             url: str, 
-            headers: dict, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            headers = None, 
             data    = None,
             params  = None,
             cookies = None,
