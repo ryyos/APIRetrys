@@ -77,8 +77,9 @@ class ApiRetry:
             headers: dict, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
-            params  = None,
             data    = None,
+            json    = None,
+            params  = None,
             cookies = None,
             files   = None,
             auth    = None,
@@ -88,26 +89,25 @@ class ApiRetry:
             stream  = None,
             verify  = None,
             cert    = None,
-            json    = None,
             ) -> Response:
         
         for retry in range(max_retries):
             try:
                 response = requests.post(
-                        url     = url,
-                        params  = params,
-                        data    = data,
-                        headers = headers,
-                        cookies = cookies,
-                        files   = files,
-                        auth    = auth,
-                        timeout = timeout,
-                        proxies = proxies,
-                        hooks   = hooks,
-                        stream  = stream,
-                        verify  = verify,
-                        cert    = cert,
-                        json    = json,
+                    url     = url,
+                    data    = data,
+                    json    = json,
+                    params  = params,
+                    headers = headers,
+                    cookies = cookies,
+                    files   = files,
+                    auth    = auth,
+                    timeout = timeout,
+                    proxies = proxies,
+                    hooks   = hooks,
+                    stream  = stream,
+                    verify  = verify,
+                    cert    = cert,
                 )
 
                 if self.show_logs and response.status_code == 200:
