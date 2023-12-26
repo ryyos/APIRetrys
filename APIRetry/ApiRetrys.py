@@ -3,21 +3,51 @@ from requests import Response
 from typing import Union
 from time import sleep
 from icecream import ic
-from LogsOptions import LogsOptions
+from Exceptions.MaxRetryExceptions import MaxRetryExceptions
 from utils.Logs import logger
 
 class ApiRetry:
-    def __init__(self, options: LogsOptions = None) -> None:
-        self.show_logs = options.show_log
-        self.path = options.path
+    def __init__(self, show_logs: bool = False) -> None:
+        self.show_logs = show_logs
 
-        print(options)
-        pass
-
-    def get(self, url: str, headers: dict, max_retries: int = 5, retry_interval: Union[int, float] = 0.2):
+    def get(
+            self, 
+            url: str, 
+            headers: dict, 
+            max_retries: int = 5, 
+            retry_interval: Union[int, float] = 0.2,
+            params  = None,
+            data    = None,
+            cookies = None,
+            files   = None,
+            auth    = None,
+            timeout = None,
+            proxies = None,
+            hooks   = None,
+            stream  = None,
+            verify  = None,
+            cert    = None,
+            json    = None,
+            ) -> Response:
+        
         for retry in range(max_retries):
             try:
-                response = requests.get(url=url, headers=headers)
+                response = requests.get(
+                        url     = url,
+                        params  = params,
+                        data    = data,
+                        headers = headers,
+                        cookies = cookies,
+                        files   = files,
+                        auth    = auth,
+                        timeout = timeout,
+                        proxies = proxies,
+                        hooks   = hooks,
+                        stream  = stream,
+                        verify  = verify,
+                        cert    = cert,
+                        json    = json,
+                )
 
                 if self.show_logs and response.status_code == 200:
                     logger.info(f"method: GET")
@@ -38,28 +68,66 @@ class ApiRetry:
             sleep(retry_interval)
             retry_interval+= 0.2
         
-        raise
+        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
         
 
-    def post(self, url: str, headers: dict, max_retries: int = 5, retry_interval: Union[int, float] = 0.2, payload: any = None):
+    def post(
+            self, 
+            url: str, 
+            headers: dict, 
+            max_retries: int = 5, 
+            retry_interval: Union[int, float] = 0.2,
+            params  = None,
+            data    = None,
+            cookies = None,
+            files   = None,
+            auth    = None,
+            timeout = None,
+            proxies = None,
+            hooks   = None,
+            stream  = None,
+            verify  = None,
+            cert    = None,
+            json    = None,
+            ) -> Response:
+        
         for retry in range(max_retries):
             try:
-                response = requests.post(url=url, headers=headers, data=payload)
+                response = requests.post(
+                        url     = url,
+                        params  = params,
+                        data    = data,
+                        headers = headers,
+                        cookies = cookies,
+                        files   = files,
+                        auth    = auth,
+                        timeout = timeout,
+                        proxies = proxies,
+                        hooks   = hooks,
+                        stream  = stream,
+                        verify  = verify,
+                        cert    = cert,
+                        json    = json,
+                )
 
                 if self.show_logs and response.status_code == 200:
-                    logger.info(f"method: GET")
+                    logger.info(f"method: POST")
                     logger.info(f"status code: {response.status_code}")
                     logger.info(f"retry to: {retry}")
-                    
+
                 elif self.show_logs and response.status_code != 200:
-                    logger.warning(f"method: GET")
+                    logger.warning(f"method: POST")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry}")
 
+
                 return response
             except Exception as err:
-                # self.__logs.err(message=err, url=url)
-                ic(err)
+                logger.error(f'message: {err}')
+                logger.warning(f'try the request again')
+                
             sleep(retry_interval)
             retry_interval+= 0.2
+        
+        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
         
