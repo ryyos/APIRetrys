@@ -19,7 +19,7 @@ setup(
     author_email="<mail@riodwi12174.com>",
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     packages=find_packages(),
     install_requires=['requests', 'logging'],
     keywords=['python', 'request', 'retry', 'api', 'timeout', 'auto'],
