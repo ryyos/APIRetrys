@@ -32,14 +32,14 @@ pip install APIRetrys
 Basic use
 
 ```python
-from ApiRetrys import ApiRetry
+from APIRetrys import ApiRetry
 
 api = ApiRetry(show_logs=False)
 response = api.get(url='https://github.com/')
 
 # or you can define data types
 
-from ApiRetrys import ApiRetry
+from APIRetrys import ApiRetry
 from requests import Response
 
 api = ApiRetry(show_logs=False)
@@ -50,7 +50,7 @@ response: Response = api.get(url='https://github.com/')
 With other parameters
 
 ```python
-from ApiRetrys import ApiRetry
+from APIRetrys import ApiRetry
 from requests import Response
 
 headers = {

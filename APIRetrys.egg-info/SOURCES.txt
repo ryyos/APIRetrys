@@ -1,0 +1,12 @@
+LICENSE
+README.md
+setup.py
+APIRetrys/ApiRetrys.py
+APIRetrys/Logs.py
+APIRetrys/MaxRetryExceptions.py
+APIRetrys/__init__.py
+APIRetrys.egg-info/PKG-INFO
+APIRetrys.egg-info/SOURCES.txt
+APIRetrys.egg-info/dependency_links.txt
+APIRetrys.egg-info/requires.txt
+APIRetrys.egg-info/top_level.txt
