@@ -1,6 +1,6 @@
 <h1 align="center" >Hello, I'm Ryo 👋</h1>
 
-<h1 align="center" >Welcome To APIRetry 🔥</h1>
+<h1 align="center" >Welcome To APIRetrys 🔥</h1>
 
 > I created this library to make it easier for developers to handle time out requests that may be caused by network difficulties
 
@@ -24,7 +24,7 @@
 ## Installation
 
 ```sh
-pip install APIRetry
+pip install APIRetrys
 ```
 
 ## Example Usage
@@ -90,15 +90,11 @@ response: Response = api.post(url='https://github.com/', data=payload, cookies=c
 │   README.md
 │   setup.py
 │
-└───APIRetry
-    │   ApiRetrys.py
-    │   __init__.py
-    │
-    ├───Exceptions
-    │       MaxRetryExceptions.py
-    │
-    └───utils
-            Logs.py
+└───APIRetrys
+        ApiRetrys.py
+        Logs.py
+        MaxRetryExceptions.py
+        __init__.py
 ```
 
 ## Author
