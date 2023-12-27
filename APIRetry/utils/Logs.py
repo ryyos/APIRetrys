@@ -1,10 +1,7 @@
 import logging
-from datetime import datetime as time
-from icecream import ic
 
 
-
-logging.basicConfig(datefmt='%m/%d/%Y %I:%M:%S %p', encoding="utf-8", level=logging.DEBUG)
+logging.basicConfig(datefmt='%m/%d/%Y %I:%M:%S %p', encoding="utf-8", level=logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 console = logging.StreamHandler()

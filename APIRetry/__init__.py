@@ -1,1 +1,1 @@
-from APIRetry.LogsOptions import LogsOptions
+from APIRetry.ApiRetrys import ApiRetry
