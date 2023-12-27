@@ -2,8 +2,8 @@ import requests
 from requests import Response
 from typing import Union
 from time import sleep
-from MaxRetryExceptions import MaxRetryExceptions
-from Logs import logger
+from .MaxRetryExceptions import MaxRetryExceptions
+from .Logs import logger
 
 class ApiRetry:
     def __init__(self, show_logs: bool = False) -> None:
