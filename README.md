@@ -1,7 +1,6 @@
-<h1 align="center" >Hello 👋, I'm Ryo</h1>
-<h3 align="center" >An independent backend developer</h3>
+<h1 align="center" >Hello, I'm Ryo 👋</h1>
 
-<h1 align="center" >Welcome To APIRetry🔥</h1>
+<h1 align="center" >Welcome To APIRetry 🔥</h1>
 
 > I created this library to make it easier for developers to handle time out requests that may be caused by network difficulties
 
