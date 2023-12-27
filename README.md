@@ -48,7 +48,7 @@ response: Response = api.get(url='https://github.com/')
 
 ```
 
-With with other parameters
+With other parameters
 
 ```python
 from ApiRetrys import ApiRetry
