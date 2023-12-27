@@ -7,7 +7,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '0.0.1'
+VERSION = '0.0.3'
 DESCRIPTION = 'To handle API request retries due to timeouts'
 LONG_DESCRIPTION = 'APIRetry offers seamless integration to automatically handle API request retries in Python projects'
 
@@ -16,7 +16,7 @@ setup(
     name="APIRetrys",
     version=VERSION,
     author="Ryosoraa (Rio Dwi Saputra)",
-    author_email="<mail@riodwi12174.com>",
+    author_email="<riodwi12174@gmail.com>",
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
     long_description=long_description,
