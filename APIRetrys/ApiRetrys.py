@@ -13,6 +13,7 @@ class ApiRetry:
                  redirect_url: str = None,
                  show_logs: bool = False, 
                  exception_code: List[int] = [200, 404, 500, 501, 502, 503, 504, 505, 506, 507, 508, 510, 511],
+                 codes_handler: List[int] = [403, 429],
                  handle_forbidden: bool = False,
                  defaulth_headers: bool = False
                  ) -> None:
@@ -26,7 +27,7 @@ class ApiRetry:
         self.defaulth_headers = defaulth_headers
 
         self.doit_handler = handle_forbidden
-        self.codes_handler = [403, 429]
+        self.codes_handler = codes_handler
 
     def get(
             self, 
@@ -77,12 +78,12 @@ class ApiRetry:
                 elif self.show_logs and response.status_code != 200:
                     logger.warning(f"method: GET")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
                     logger.warning(f"method: GET")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -94,6 +95,8 @@ class ApiRetry:
             except Exception as err:
                 logger.error(f'message: {err}')
                 logger.warning(f'try the request again')
+                logger.warning(f"retry to: {retry+1}")
+                print()
                 
             sleep(retry_interval)
             retry_interval+= 0.2
@@ -150,12 +153,12 @@ class ApiRetry:
                 elif self.show_logs and response.status_code != 200:
                     logger.warning(f"method: POST")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
                     logger.warning(f"method: POST")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -168,6 +171,8 @@ class ApiRetry:
             except Exception as err:
                 logger.error(f'message: {err}')
                 logger.warning(f'try the request again')
+                logger.warning(f"retry to: {retry+1}")
+                print()
                 
             sleep(retry_interval)
             retry_interval+= 0.2
@@ -223,12 +228,12 @@ class ApiRetry:
                 elif self.show_logs and response.status_code != 200:
                     logger.warning(f"method: HEAD")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
                     logger.warning(f"method: HEAD")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -240,6 +245,8 @@ class ApiRetry:
             except Exception as err:
                 logger.error(f'message: {err}')
                 logger.warning(f'try the request again')
+                logger.warning(f"retry to: {retry+1}")
+                print()
                 
             sleep(retry_interval)
             retry_interval+= 0.2
@@ -295,12 +302,12 @@ class ApiRetry:
                 elif self.show_logs and response.status_code != 200:
                     logger.warning(f"method: PUT")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
                     logger.warning(f"method: PUT")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -313,6 +320,8 @@ class ApiRetry:
             except Exception as err:
                 logger.error(f'message: {err}')
                 logger.warning(f'try the request again')
+                logger.warning(f"retry to: {retry+1}")
+                print()
                 
             sleep(retry_interval)
             retry_interval+= 0.2
@@ -369,12 +378,12 @@ class ApiRetry:
                 elif self.show_logs and response.status_code != 200:
                     logger.warning(f"method: DELETE")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
                     logger.warning(f"method: DELETE")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -386,6 +395,8 @@ class ApiRetry:
             except Exception as err:
                 logger.error(f'message: {err}')
                 logger.warning(f'try the request again')
+                logger.warning(f"retry to: {retry+1}")
+                print()
                 
             sleep(retry_interval)
             retry_interval+= 0.2
@@ -444,12 +455,12 @@ class ApiRetry:
                 elif self.show_logs and response.status_code != 200:
                     logger.warning(f"method: REQUEST")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
                     logger.warning(f"method: REQUEST")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -461,6 +472,8 @@ class ApiRetry:
             except Exception as err:
                 logger.error(f'message: {err}')
                 logger.warning(f'try the request again')
+                logger.warning(f"retry to: {retry+1}")
+                print()
                 
             sleep(retry_interval)
             retry_interval+= 0.2
@@ -517,13 +530,13 @@ class ApiRetry:
                 elif self.show_logs and response.status_code != 200:
                     logger.warning(f"method: OPTIONS")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
 
                 if response.status_code in self.codes_handler and self.doit_handler:
                     logger.warning(f"method: OPTIONS")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -536,6 +549,8 @@ class ApiRetry:
             except Exception as err:
                 logger.error(f'message: {err}')
                 logger.warning(f'try the request again')
+                logger.warning(f"retry to: {retry+1}")
+                print()
                 
             sleep(retry_interval)
             retry_interval+= 0.2
@@ -592,12 +607,12 @@ class ApiRetry:
                 elif self.show_logs and response.status_code != 200:
                     logger.warning(f"method: PATCH")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
                     logger.warning(f"method: GET")
                     logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry}")
+                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -610,6 +625,8 @@ class ApiRetry:
             except Exception as err:
                 logger.error(f'message: {err}')
                 logger.warning(f'try the request again')
+                logger.warning(f"retry to: {retry+1}")
+                print()
                 
             sleep(retry_interval)
             retry_interval+= 0.2

@@ -15,7 +15,7 @@ LONG_DESCRIPTION = 'Are you annoyed because your request has an error due to int
 setup(
     name="APIRetrys",
     version=VERSION,
-    author="Ryosoraa (Rio Dwi Saputra)",
+    author="ryyos (Rio Dwi Saputra)",
     author_email="<riodwi12174@gmail.com>",
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
