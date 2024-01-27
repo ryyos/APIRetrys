@@ -1,13 +1,29 @@
 import requests
+
+from fake_useragent import FakeUserAgent
 from requests import Response
-from typing import Union
+from requests.sessions import Session
+from typing import Union, List
 from time import sleep
 from .MaxRetryExceptions import MaxRetryExceptions
 from .Logs import logger
 
 class ApiRetry:
-    def __init__(self, show_logs: bool = False) -> None:
+    def __init__(self, 
+                 redirect_url: str,
+                 show_logs: bool = False, 
+                 exception_code: List[int] = [200],
+                 handle_forbidden: bool = True,
+                 defaulth_headers: bool = False
+                 ) -> None:
+        
+        self.sessions = Session()
+        self.faker = FakeUserAgent()
+        
         self.show_logs = show_logs
+        self.status_code = exception_code
+        self.redirect_url = redirect_url
+        self.defaulth_headers = defaulth_headers
 
     def get(
             self, 
@@ -30,12 +46,14 @@ class ApiRetry:
             ) -> Response:
         
         for retry in range(max_retries):
+            header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
+            
             try:
-                response = requests.get(
+                response = self.sessions.get(
                         url     = url,
                         params  = params,
                         data    = data,
-                        headers = headers,
+                        headers = header,
                         cookies = cookies,
                         files   = files,
                         auth    = auth,
@@ -91,13 +109,15 @@ class ApiRetry:
             ) -> Response:
         
         for retry in range(max_retries):
+            header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
+
             try:
-                response = requests.post(
+                response = self.sessions.post(
                     url     = url,
                     data    = data,
                     json    = json,
                     params  = params,
-                    headers = headers,
+                    headers = header,
                     cookies = cookies,
                     files   = files,
                     auth    = auth,
@@ -151,12 +171,14 @@ class ApiRetry:
             ) -> Response:
         
         for retry in range(max_retries):
+            header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
+
             try:
-                response    = requests.head(
+                response    = self.sessions.head(
                     url     = url,
                     params  = params,
                     data    = data,
-                    headers = headers,
+                    headers = header,
                     cookies = cookies,
                     files   = files,
                     auth    = auth,
@@ -211,12 +233,14 @@ class ApiRetry:
             ) -> Response:
         
         for retry in range(max_retries):
+            header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
+
             try:
-                response    = requests.put(
+                response    = self.sessions.put(
                     url     = url,
                     data    = data,
                     params  = params,
-                    headers = headers,
+                    headers = header,
                     cookies = cookies,
                     files   = files,
                     auth    = auth,
@@ -272,12 +296,14 @@ class ApiRetry:
             ) -> Response:
         
         for retry in range(max_retries):
+            header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
+
             try:
-                response    = requests.delete(
+                response    = self.sessions.delete(
                     url     = url,
                     params  = params,
                     data    = data,
-                    headers = headers,
+                    headers = header,
                     cookies = cookies,
                     files   = files,
                     auth    = auth,
@@ -334,13 +360,15 @@ class ApiRetry:
             ) -> Response:
         
         for retry in range(max_retries):
+            header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
+
             try:
-                response    = requests.request(
+                response    = self.sessions.request(
                     method  = method,
                     url     = url,
                     params  = params,
                     data    = data,
-                    headers = headers,
+                    headers = header,
                     cookies = cookies,
                     files   = files,
                     auth    = auth,
@@ -396,12 +424,14 @@ class ApiRetry:
             ) -> Response:
         
         for retry in range(max_retries):
+            header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
+
             try:
-                response = requests.options(
+                response = self.sessions.options(
                         url     = url,
                         params  = params,
                         data    = data,
-                        headers = headers,
+                        headers = header,
                         cookies = cookies,
                         files   = files,
                         auth    = auth,
@@ -457,12 +487,14 @@ class ApiRetry:
             ) -> Response:
         
         for retry in range(max_retries):
+            header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
+
             try:
-                response = requests.patch(
+                response = self.sessions.patch(
                         url     = url,
                         params  = params,
                         data    = data,
-                        headers = headers,
+                        headers = header,
                         cookies = cookies,
                         files   = files,
                         auth    = auth,
