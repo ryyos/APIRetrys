@@ -4,7 +4,7 @@
 
 ![Version](https://img.shields.io/badge/version-0.0.1-green.svg?cacheSeconds=2592000)
 
-> Are you annoyed because your request has an error due to internet problems? I think this could be the answer
+> Are you annoyed because your request has an error due to internet problems? I think this library could be the answer
 
 ## Feature ✨
 
