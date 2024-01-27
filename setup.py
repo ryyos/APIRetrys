@@ -9,7 +9,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
 
 VERSION = '0.0.1'
 DESCRIPTION = 'To handle API request retries due to timeouts'
-LONG_DESCRIPTION = 'APIRetry offers seamless integration to automatically handle API request retries in Python projects'
+LONG_DESCRIPTION = 'Are you annoyed because your request has an error due to internet problems ? I think this could be the answer'
 
 # Setting up
 setup(

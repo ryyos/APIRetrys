@@ -2,7 +2,7 @@
 
 <h1 align="center" >Welcome To APIRetrys 🔥</h1>
 
-> I created this library to make it easier for developers to handle time out requests that may be caused by network difficulties
+> Are you annoyed because your request has an error due to internet problems? I think this could be the answer
 
 ## Feature
 

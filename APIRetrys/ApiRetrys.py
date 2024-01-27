@@ -25,6 +25,9 @@ class ApiRetry:
         self.redirect_url = redirect_url
         self.defaulth_headers = defaulth_headers
 
+        self.doit_handler = handle_forbidden
+        self.codes_handler = [403, 429]
+
     def get(
             self, 
             url: str, 
@@ -76,6 +79,16 @@ class ApiRetry:
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry}")
 
+                if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"method: GET")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+                    self.sessions.get(url=self.redirect_url, headers=header)
+                    sleep(retry_interval)
+                    retry_interval+= 5
+
+                    continue
 
                 return response
             except Exception as err:
@@ -139,6 +152,17 @@ class ApiRetry:
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry}")
 
+                if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"method: POST")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+                    self.sessions.get(url=self.redirect_url, headers=header)
+                    sleep(retry_interval)
+                    retry_interval+= 5
+
+                    continue
+
 
                 return response
             except Exception as err:
@@ -201,6 +225,16 @@ class ApiRetry:
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry}")
 
+                if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"method: HEAD")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+                    self.sessions.get(url=self.redirect_url, headers=header)
+                    sleep(retry_interval)
+                    retry_interval+= 5
+
+                    continue
 
                 return response
             except Exception as err:
@@ -262,6 +296,17 @@ class ApiRetry:
                     logger.warning(f"method: PUT")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry}")
+
+                if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"method: PUT")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+                    self.sessions.get(url=self.redirect_url, headers=header)
+                    sleep(retry_interval)
+                    retry_interval+= 5
+
+                    continue
 
 
                 return response
@@ -326,6 +371,16 @@ class ApiRetry:
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry}")
 
+                if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"method: DELETE")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+                    self.sessions.get(url=self.redirect_url, headers=header)
+                    sleep(retry_interval)
+                    retry_interval+= 5
+
+                    continue
 
                 return response
             except Exception as err:
@@ -391,6 +446,16 @@ class ApiRetry:
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry}")
 
+                if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"method: REQUEST")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+                    self.sessions.get(url=self.redirect_url, headers=header)
+                    sleep(retry_interval)
+                    retry_interval+= 5
+
+                    continue
 
                 return response
             except Exception as err:
@@ -455,6 +520,18 @@ class ApiRetry:
                     logger.warning(f"retry to: {retry}")
 
 
+                if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"method: OPTIONS")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+                    self.sessions.get(url=self.redirect_url, headers=header)
+                    sleep(retry_interval)
+                    retry_interval+= 5
+
+                    continue
+
+
                 return response
             except Exception as err:
                 logger.error(f'message: {err}')
@@ -516,6 +593,17 @@ class ApiRetry:
                     logger.warning(f"method: PATCH")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry}")
+
+                if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"method: GET")
+                    logger.warning(f"status code: {response.status_code}")
+                    logger.warning(f"retry to: {retry}")
+
+                    self.sessions.get(url=self.redirect_url, headers=header)
+                    sleep(retry_interval)
+                    retry_interval+= 5
+
+                    continue
 
 
                 return response
