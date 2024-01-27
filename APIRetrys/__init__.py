@@ -1,1 +1,1 @@
-from APIRetrys.ApiRetrys import ApiRetry
+from ApiRetrys.ApiRetrys import ApiRetry

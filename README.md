@@ -1,8 +1,8 @@
 <h1 align="center" >Hello, I'm Ryo 👋</h1>
 
-<h1 align="center" >Welcome To APIRetrys 🔥</h1>
+<h1 align="center" >Welcome To ApiRetrys 🔥</h1>
 
-![Version](https://img.shields.io/badge/version-0.0.1-green.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-0.0.4-green.svg?cacheSeconds=2592000)
 
 > Are you annoyed because your request has an error due to internet problems? I think this could be the answer
 
@@ -28,7 +28,7 @@
 ## Installation 🛠️
 
 ```sh
-pip install APIRetrys
+pip install ApiRetrys
 ```
 
 ## How To Usage 🤔
@@ -36,14 +36,14 @@ pip install APIRetrys
 Basic use
 
 ```python
-from APIRetrys import ApiRetry
+from ApiRetrys import ApiRetry
 
 api = ApiRetry(show_logs=True)
 response = api.get(url='https://github.com/')
 
 # or you can define data types
 
-from APIRetrys import ApiRetry
+from ApiRetrys import ApiRetry
 from requests import Response
 
 api = ApiRetry(show_logs=True)
@@ -73,7 +73,7 @@ response: Response = api.get(url='https://github.com/', max_retries=10)
 ### With other parameters
 
 ```python
-from APIRetrys import ApiRetry
+from ApiRetrys import ApiRetry
 from requests import Response
 
 headers = {
@@ -110,7 +110,7 @@ response: Response = api.post(url='https://github.com/', data=payload, cookies=c
 
 ```python
 
-from APIRetrys import ApiRetry
+from ApiRetrys import ApiRetry
 from requests import Response
 
 class Main:
@@ -147,13 +147,13 @@ class Main:
 
 if __name__ == '__main__':
     main = Main()
-    main.execute('https://github.com/ryyos/APIRetrys')
+    main.execute('https://github.com/ryyos/ApiRetrys')
 
 ```
 
 ### explanation
 
-when you try to make a request to the url https://github.com/ryyos/APIRetrys
+when you try to make a request to the url https://github.com/ryyos/ApiRetrys
 but you get a 403 response because your session does not have CSRF-TOKEN, or because there are too many requests, then the code will handle it by trying to refresh the session by making requests to the main URL in the redirect_url parameter
 
 ## 🚀Structure
@@ -163,7 +163,7 @@ but you get a 403 response because your session does not have CSRF-TOKEN, or bec
 │   README.md
 │   setup.py
 │
-└───APIRetrys
+└───ApiRetrys
         ApiRetrys.py
         Logs.py
         MaxRetryExceptions.py
