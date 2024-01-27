@@ -2,7 +2,7 @@
 
 <h1 align="center" >Welcome To ApiRetrys 🔥</h1>
 
-![Version](https://img.shields.io/badge/version-0.0.4-green.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-0.0.1-green.svg?cacheSeconds=2592000)
 
 > Are you annoyed because your request has an error due to internet problems? I think this could be the answer
 
