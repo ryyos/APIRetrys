@@ -5,7 +5,6 @@ from requests import Response
 from requests.sessions import Session
 from typing import Union, List
 from time import sleep
-from .MaxRetryExceptions import MaxRetryExceptions
 from .Logs import logger
 
 class ApiRetry:
@@ -49,6 +48,7 @@ class ApiRetry:
             json    = None,
             ) -> Response:
         
+        response = None
         for retry in range(max_retries):
             header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
             
@@ -71,19 +71,18 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
+                    logger.info(f"request to: {url}")
                     logger.info(f"method: GET")
                     logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry}")
+                    logger.info(f"retry to: {retry+1}")
 
                 elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: GET")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
-                    logger.warning(f"method: GET")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -101,7 +100,7 @@ class ApiRetry:
             sleep(retry_interval)
             retry_interval+= 0.2
         
-        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
+        return response
         
 
     def post(
@@ -124,6 +123,7 @@ class ApiRetry:
             cert    = None,
             ) -> Response:
         
+        response = None
         for retry in range(max_retries):
             header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
 
@@ -146,16 +146,19 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
+                    logger.info(f"request to: {url}")
                     logger.info(f"method: POST")
                     logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry}")
+                    logger.info(f"retry to: {retry+1}")
 
                 elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: POST")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: POST")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
@@ -177,7 +180,7 @@ class ApiRetry:
             sleep(retry_interval)
             retry_interval+= 0.2
         
-        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
+        return response
 
     def head(
             self, 
@@ -199,6 +202,7 @@ class ApiRetry:
             json    = None,
             ) -> Response:
         
+        response = None
         for retry in range(max_retries):
             header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
 
@@ -221,16 +225,19 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
+                    logger.info(f"request to: {url}")
                     logger.info(f"method: HEAD")
                     logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry}")
+                    logger.info(f"retry to: {retry+1}")
 
                 elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: HEAD")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: HEAD")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
@@ -251,7 +258,7 @@ class ApiRetry:
             sleep(retry_interval)
             retry_interval+= 0.2
         
-        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
+        return response
 
     def put(
             self, 
@@ -273,6 +280,7 @@ class ApiRetry:
             json    = None,
             ) -> Response:
         
+        response = None
         for retry in range(max_retries):
             header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
 
@@ -295,16 +303,19 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
+                    logger.info(f"request to: {url}")
                     logger.info(f"method: PUT")
                     logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry}")
+                    logger.info(f"retry to: {retry+1}")
 
                 elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: PUT")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: PUT")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
@@ -326,7 +337,7 @@ class ApiRetry:
             sleep(retry_interval)
             retry_interval+= 0.2
         
-        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
+        return response
     
 
     def delete(
@@ -349,6 +360,7 @@ class ApiRetry:
             json    = None,
             ) -> Response:
         
+        response = None
         for retry in range(max_retries):
             header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
 
@@ -371,16 +383,19 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
+                    logger.info(f"request to: {url}")
                     logger.info(f"method: DELETE")
                     logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry}")
+                    logger.info(f"retry to: {retry+1}")
 
                 elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: DELETE")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: DELETE")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
@@ -401,7 +416,7 @@ class ApiRetry:
             sleep(retry_interval)
             retry_interval+= 0.2
         
-        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
+        return response
     
 
     def request(
@@ -425,6 +440,7 @@ class ApiRetry:
             json    = None,
             ) -> Response:
         
+        response = None
         for retry in range(max_retries):
             header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
 
@@ -448,16 +464,19 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
+                    logger.info(f"request to: {url}")
                     logger.info(f"method: REQUEST")
                     logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry}")
+                    logger.info(f"retry to: {retry+1}")
 
                 elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: REQUEST")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: REQUEST")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
@@ -478,7 +497,7 @@ class ApiRetry:
             sleep(retry_interval)
             retry_interval+= 0.2
         
-        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
+        return response
     
 
     def options(
@@ -501,6 +520,7 @@ class ApiRetry:
             json    = None,
             ) -> Response:
         
+        response = None
         for retry in range(max_retries):
             header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
 
@@ -523,20 +543,20 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
+                    logger.info(f"request to: {url}")
                     logger.info(f"method: OPTIONS")
                     logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry}")
+                    logger.info(f"retry to: {retry+1}")
 
                 elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: OPTIONS")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
 
 
+                    logger.warning(f"request to: {url}")
                 if response.status_code in self.codes_handler and self.doit_handler:
-                    logger.warning(f"method: OPTIONS")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -555,7 +575,7 @@ class ApiRetry:
             sleep(retry_interval)
             retry_interval+= 0.2
         
-        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
+        return response
     
 
     def patch(
@@ -578,6 +598,7 @@ class ApiRetry:
             json    = None,
             ) -> Response:
         
+        response = None
         for retry in range(max_retries):
             header = {"User-Agent": self.faker.random} if self.defaulth_headers else headers
 
@@ -600,19 +621,18 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
+                    logger.info(f"request to: {url}")
                     logger.info(f"method: PATCH")
                     logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry}")
+                    logger.info(f"retry to: {retry+1}")
 
                 elif self.show_logs and response.status_code != 200:
+                    logger.warning(f"request to: {url}")
                     logger.warning(f"method: PATCH")
                     logger.warning(f"status code: {response.status_code}")
                     logger.warning(f"retry to: {retry+1}")
 
                 if response.status_code in self.codes_handler and self.doit_handler:
-                    logger.warning(f"method: GET")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -631,4 +651,4 @@ class ApiRetry:
             sleep(retry_interval)
             retry_interval+= 0.2
         
-        raise MaxRetryExceptions(message=f"Failed to retrieve data after {max_retries} retries. The server may be unreachable or experiencing issues")
+        return response

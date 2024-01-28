@@ -2,7 +2,7 @@
 
 <h1 align="center" >Welcome To ApiRetrys 🔥</h1>
 
-![Version](https://img.shields.io/badge/version-0.0.1-green.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-0.0.2-green.svg?cacheSeconds=2592000)
 
 > Are you annoyed because your request has an error due to internet problems? I think this library could be the answer
 
@@ -62,11 +62,11 @@ response: Response = api.get(url='https://github.com/', max_retries=10)
 </div>
 <br>
 
-### If the error exceeds max_retries then it will raise the exception MaxRetryExceptions
+### If the error exceeds max_retries then it will return last response
 
 <br>
 <div style="text-align: center;">
-  <img src="https://raw.githubusercontent.com/ryyos/ryyos/main/images/ApiRetrys/max_retires.png"> 
+  <img src="https://raw.githubusercontent.com/ryyos/ryyos/main/images/ApiRetrys/max_retire.png"> 
 </div>
 <br>
 
