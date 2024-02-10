@@ -4,6 +4,7 @@ from fake_useragent import FakeUserAgent
 from requests import Response
 from requests.sessions import Session
 from typing import Union, List
+from click import style
 from time import sleep
 from .Logs import logger
 
@@ -33,6 +34,7 @@ class ApiRetry:
             url: str, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            allow_redirects = True,
             headers = None, 
             params  = None,
             data    = None,
@@ -68,19 +70,17 @@ class ApiRetry:
                         verify  = verify,
                         cert    = cert,
                         json    = json,
+                        allow_redirects = allow_redirects
                 )
 
                 if self.show_logs and response.status_code == 200:
-                    logger.info(f"request to: {url}")
-                    logger.info(f"method: GET")
-                    logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry+1}")
+
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ GET ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 elif self.show_logs and response.status_code != 200:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: GET")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ GET ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 if response.status_code in self.codes_handler and self.doit_handler:
 
@@ -92,9 +92,9 @@ class ApiRetry:
 
                 return response
             except Exception as err:
-                logger.error(f'message: {err}')
-                logger.warning(f'try the request again')
-                logger.warning(f"retry to: {retry+1}")
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("ERROR", fg="magenta")}: [ {style(err, fg="red")} ]')
+
                 print()
                 
             sleep(retry_interval)
@@ -108,6 +108,7 @@ class ApiRetry:
             url: str, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            allow_redirects = True,
             headers = None, 
             data    = None,
             json    = None,
@@ -135,6 +136,7 @@ class ApiRetry:
                     params  = params,
                     headers = header,
                     cookies = cookies,
+                    allow_redirects = allow_redirects,
                     files   = files,
                     auth    = auth,
                     timeout = timeout,
@@ -146,23 +148,16 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
-                    logger.info(f"request to: {url}")
-                    logger.info(f"method: POST")
-                    logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry+1}")
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ POST ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 elif self.show_logs and response.status_code != 200:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: POST")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ POST ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 if response.status_code in self.codes_handler and self.doit_handler:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: POST")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
-
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ POST ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
                     retry_interval+= 5
@@ -172,9 +167,8 @@ class ApiRetry:
 
                 return response
             except Exception as err:
-                logger.error(f'message: {err}')
-                logger.warning(f'try the request again')
-                logger.warning(f"retry to: {retry+1}")
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("ERROR", fg="magenta")}: [ {style(err, fg="red")} ]')
                 print()
                 
             sleep(retry_interval)
@@ -187,6 +181,7 @@ class ApiRetry:
             url: str, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            allow_redirects = True,
             headers = None, 
             params  = None,
             data    = None,
@@ -214,6 +209,7 @@ class ApiRetry:
                     headers = header,
                     cookies = cookies,
                     files   = files,
+                    allow_redirects = allow_redirects,
                     auth    = auth,
                     timeout = timeout,
                     proxies = proxies,
@@ -225,22 +221,16 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
-                    logger.info(f"request to: {url}")
-                    logger.info(f"method: HEAD")
-                    logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry+1}")
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ HEAD ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 elif self.show_logs and response.status_code != 200:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: HEAD")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ HEAD ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 if response.status_code in self.codes_handler and self.doit_handler:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: HEAD")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ HEAD ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -250,9 +240,8 @@ class ApiRetry:
 
                 return response
             except Exception as err:
-                logger.error(f'message: {err}')
-                logger.warning(f'try the request again')
-                logger.warning(f"retry to: {retry+1}")
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("ERROR", fg="magenta")}: [ {style(err, fg="red")} ]')
                 print()
                 
             sleep(retry_interval)
@@ -265,6 +254,7 @@ class ApiRetry:
             url: str, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            allow_redirects = True,
             headers = None, 
             data    = None,
             params  = None,
@@ -292,6 +282,7 @@ class ApiRetry:
                     headers = header,
                     cookies = cookies,
                     files   = files,
+                    allow_redirects = allow_redirects,
                     auth    = auth,
                     timeout = timeout,
                     proxies = proxies,
@@ -303,22 +294,16 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
-                    logger.info(f"request to: {url}")
-                    logger.info(f"method: PUT")
-                    logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry+1}")
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ PUT ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 elif self.show_logs and response.status_code != 200:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: PUT")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
-
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ PUT ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
+                    
                 if response.status_code in self.codes_handler and self.doit_handler:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: PUT")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ PUT ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -329,9 +314,8 @@ class ApiRetry:
 
                 return response
             except Exception as err:
-                logger.error(f'message: {err}')
-                logger.warning(f'try the request again')
-                logger.warning(f"retry to: {retry+1}")
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("ERROR", fg="magenta")}: [ {style(err, fg="red")} ]')
                 print()
                 
             sleep(retry_interval)
@@ -345,6 +329,7 @@ class ApiRetry:
             url: str, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            allow_redirects = True,
             headers = None, 
             params  = None,
             data    = None,
@@ -372,6 +357,7 @@ class ApiRetry:
                     headers = header,
                     cookies = cookies,
                     files   = files,
+                    allow_redirects = allow_redirects,
                     auth    = auth,
                     timeout = timeout,
                     proxies = proxies,
@@ -383,22 +369,16 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
-                    logger.info(f"request to: {url}")
-                    logger.info(f"method: DELETE")
-                    logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry+1}")
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ DELETE ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 elif self.show_logs and response.status_code != 200:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: DELETE")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ DELETE ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 if response.status_code in self.codes_handler and self.doit_handler:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: DELETE")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ DELETE ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -408,9 +388,8 @@ class ApiRetry:
 
                 return response
             except Exception as err:
-                logger.error(f'message: {err}')
-                logger.warning(f'try the request again')
-                logger.warning(f"retry to: {retry+1}")
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("ERROR", fg="magenta")}: [ {style(err, fg="red")} ]')
                 print()
                 
             sleep(retry_interval)
@@ -425,6 +404,7 @@ class ApiRetry:
             method: str,
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            allow_redirects = True,
             headers = None, 
             params  = None,
             data    = None,
@@ -453,6 +433,7 @@ class ApiRetry:
                     headers = header,
                     cookies = cookies,
                     files   = files,
+                    allow_redirects = allow_redirects,
                     auth    = auth,
                     timeout = timeout,
                     proxies = proxies,
@@ -464,22 +445,15 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
-                    logger.info(f"request to: {url}")
-                    logger.info(f"method: REQUEST")
-                    logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry+1}")
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ REQUEST ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 elif self.show_logs and response.status_code != 200:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: REQUEST")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
-
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ REQUEST ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
                 if response.status_code in self.codes_handler and self.doit_handler:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: REQUEST")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ REQUEST ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                     self.sessions.get(url=self.redirect_url, headers=header)
                     sleep(retry_interval)
@@ -489,9 +463,8 @@ class ApiRetry:
 
                 return response
             except Exception as err:
-                logger.error(f'message: {err}')
-                logger.warning(f'try the request again')
-                logger.warning(f"retry to: {retry+1}")
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("ERROR", fg="magenta")}: [ {style(err, fg="red")} ]')
                 print()
                 
             sleep(retry_interval)
@@ -505,6 +478,7 @@ class ApiRetry:
             url: str, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            allow_redirects = True,
             headers = None, 
             params  = None,
             data    = None,
@@ -532,6 +506,7 @@ class ApiRetry:
                         headers = header,
                         cookies = cookies,
                         files   = files,
+                        allow_redirects = allow_redirects,
                         auth    = auth,
                         timeout = timeout,
                         proxies = proxies,
@@ -543,33 +518,25 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
-                    logger.info(f"request to: {url}")
-                    logger.info(f"method: OPTIONS")
-                    logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry+1}")
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ OPTIONS ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 elif self.show_logs and response.status_code != 200:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: OPTIONS")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
-
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ OPTIONS ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                     logger.warning(f"request to: {url}")
                 if response.status_code in self.codes_handler and self.doit_handler:
-
-                    self.sessions.get(url=self.redirect_url, headers=header)
-                    sleep(retry_interval)
-                    retry_interval+= 5
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ OPTIONS ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                     continue
 
 
                 return response
             except Exception as err:
-                logger.error(f'message: {err}')
-                logger.warning(f'try the request again')
-                logger.warning(f"retry to: {retry+1}")
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("ERROR", fg="magenta")}: [ {style(err, fg="red")} ]')
                 print()
                 
             sleep(retry_interval)
@@ -583,6 +550,7 @@ class ApiRetry:
             url: str, 
             max_retries: int = 5, 
             retry_interval: Union[int, float] = 0.2,
+            allow_redirects = True,
             headers = None, 
             data    = None,
             params  = None,
@@ -610,6 +578,7 @@ class ApiRetry:
                         headers = header,
                         cookies = cookies,
                         files   = files,
+                        allow_redirects = allow_redirects,
                         auth    = auth,
                         timeout = timeout,
                         proxies = proxies,
@@ -621,31 +590,24 @@ class ApiRetry:
                 )
 
                 if self.show_logs and response.status_code == 200:
-                    logger.info(f"request to: {url}")
-                    logger.info(f"method: PATCH")
-                    logger.info(f"status code: {response.status_code}")
-                    logger.info(f"retry to: {retry+1}")
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.info(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ PATCH ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 elif self.show_logs and response.status_code != 200:
-                    logger.warning(f"request to: {url}")
-                    logger.warning(f"method: PATCH")
-                    logger.warning(f"status code: {response.status_code}")
-                    logger.warning(f"retry to: {retry+1}")
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ PATCH ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                 if response.status_code in self.codes_handler and self.doit_handler:
-
-                    self.sessions.get(url=self.redirect_url, headers=header)
-                    sleep(retry_interval)
-                    retry_interval+= 5
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                    logger.warning(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("method", fg="magenta")}: [ PATCH ] | {style("code", fg="bright_blue")}: [ {response.status_code} ] | {style("retry", fg="red")}: [ {retry+1} ]')
 
                     continue
 
 
                 return response
             except Exception as err:
-                logger.error(f'message: {err}')
-                logger.warning(f'try the request again')
-                logger.warning(f"retry to: {retry+1}")
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("request", fg="magenta")}: {url}')
+                logger.error(f'[ {style("ApiRetry", fg="bright_green")} ] :: {style("ERROR", fg="magenta")}: [ {style(err, fg="red")} ]')
                 print()
                 
             sleep(retry_interval)

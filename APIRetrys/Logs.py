@@ -5,7 +5,7 @@ logging.basicConfig(datefmt='%m/%d/%Y %I:%M:%S %p', encoding="utf-8", level=logg
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 console = logging.StreamHandler()
-console.setLevel(level=logging.DEBUG) 
+console.setLevel(level=logging.INFO) 
 console.setFormatter(formatter)
 
 logger = logging.getLogger()

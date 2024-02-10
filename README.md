@@ -1,14 +1,14 @@
-<h1 align="center" >Hello, I'm Ryo 👋</h1>
+# ApiRetrys
 
-<h1 align="center" >Welcome To ApiRetrys 🔥</h1>
+![Version](https://img.shields.io/badge/version-0.0.3-green.svg?cacheSeconds=2592000)
+![ProjectImage](https://github.com/ryyos/ryyos/blob/main/images/ApiRetrys/X2Twitter.com_GE7k-SBaYAAg43B.jpg?raw=true)
 
-![Version](https://img.shields.io/badge/version-0.0.2-green.svg?cacheSeconds=2592000)
-
-> Are you annoyed because your request has an error due to internet problems? I think this library could be the answer
+**Are you annoyed because your request has an error due to internet problems? I think this library could be the answer**
 
 ## Feature ✨
 
 - automatically repeats if the request times out
+- now the runtime logs are more colorful
 - The number of repetitions and waiting time can be adjusted and default values ​​are provided
 - maintain flexibility by returning all responses received
 - provides logs to make monitoring easier, which can be turned on or not
@@ -58,7 +58,7 @@ response: Response = api.get(url='https://github.com/', max_retries=10)
 
 <br>
 <div style="text-align: center;">
-  <img src="https://raw.githubusercontent.com/ryyos/ryyos/main/images/ApiRetrys/logs_true.png"> 
+  <img src="https://github.com/ryyos/ryyos/blob/main/images/ApiRetrys/newlog.png?raw=true"> 
 </div>
 <br>
 
@@ -66,7 +66,7 @@ response: Response = api.get(url='https://github.com/', max_retries=10)
 
 <br>
 <div style="text-align: center;">
-  <img src="https://raw.githubusercontent.com/ryyos/ryyos/main/images/ApiRetrys/max_retire.png"> 
+  <img src="https://github.com/ryyos/ryyos/blob/main/images/ApiRetrys/newlog3.png?raw=true"> 
 </div>
 <br>
 
@@ -166,7 +166,6 @@ but you get a 403 response because your session does not have CSRF-TOKEN, or bec
 └───ApiRetrys
         ApiRetrys.py
         Logs.py
-        MaxRetryExceptions.py
         __init__.py
 ```
 
